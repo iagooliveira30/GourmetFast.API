@@ -12,27 +12,33 @@ namespace GourmetFast.API.Controllers
     {
         public readonly IUsuarioService _usuarioService;
 
-        public UsuarioController(UsuarioService usuarioService)
+        public UsuarioController(IUsuarioService usuarioService)
         {
             _usuarioService = usuarioService;
         }
 
         [HttpGet]
+        [Route("obterUsuarios")]
         public ActionResult<IEnumerable<Usuario>> FindAll() {
             try
             {
                 var listUsuarios = _usuarioService.FindAll();
 
+                if(!listUsuarios.Any())
+                {
+                    return NotFound();
+                }
+
                 return Ok(listUsuarios);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return BadRequest(e.Message);
-                throw;
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao retornar usuários!");
             }
         }
 
         [HttpPost]
+        [Route("criarUsuario")]
         public ActionResult CreateUsuario(UsuarioDTO usuarioDTO)
         {
             try
@@ -51,6 +57,7 @@ namespace GourmetFast.API.Controllers
         }
 
         [HttpPut]
+        [Route("atualizarUsuario")]
         public ActionResult UpdateUsuario(Guid id, [FromBody]UsuarioDTO usuarioDTO)
         {
             if(usuarioDTO == null)

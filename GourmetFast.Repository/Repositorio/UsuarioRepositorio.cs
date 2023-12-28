@@ -1,12 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GourmetFast.Core.Entidades;
+using GourmetFast.Repository.Context;
+using GourmetFast.Repository.Interfaces;
 
 namespace GourmetFast.Repository.Repositorio
 {
-    internal class UsuarioRepositorio
+    public class UsuarioRepositorio : IUsuarioRepositorio
     {
+        
+        private readonly ApplicationDbContext _context;
+
+        public UsuarioRepositorio(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public IList<Usuario> FindAll()
+        {
+            return _context.Usuarios.ToList();
+        }
     }
 }

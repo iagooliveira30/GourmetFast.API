@@ -1,10 +1,9 @@
-using GourmetFast.API.Controllers;
+using GourmetFast.Repository.Context;
+using GourmetFast.Repository.Interfaces;
+using GourmetFast.Repository.Repositorio;
 using GourmetFast.Services.Interfaces;
 using GourmetFast.Services.Services;
-using GourmetFast.Repository;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using GourmetFast.Repository.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 // Adicione o contexto ao contêiner de injeção de dependência
-builder.Services.AddIfrastructure(builder.Configuration);
-//builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//builder.Services.AddIfrastructure(builder.Configuration);
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

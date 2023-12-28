@@ -1,21 +1,25 @@
 ﻿using GourmetFast.Core.DTO;
 using GourmetFast.Core.Entidades;
+using GourmetFast.Repository.Interfaces;
 using GourmetFast.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GourmetFast.Services.Services
 {
     public class UsuarioService : IUsuarioService
     {
+        private readonly IUsuarioRepositorio _usuarioRepositorio;
+        
+        public UsuarioService(IUsuarioRepositorio usuarioRepositorio)
+        {
+            _usuarioRepositorio = usuarioRepositorio;
+        }
 
         private readonly List<Usuario> _usuario = new List<Usuario>();
         public IEnumerable<Usuario> FindAll()
         {
-            return _usuario;
+            var usuarioLista = _usuarioRepositorio.FindAll();
+           
+            return usuarioLista;
         }
 
         public void CreateUsuario(UsuarioDTO usuarioDTO)

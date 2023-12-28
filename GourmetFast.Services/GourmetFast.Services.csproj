@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GoourmetFast.Entities\GourmetFast.Core.csproj" />
+    <ProjectReference Include="..\GourmetFast.Repository\GourmetFast.Repository.csproj" />
   </ItemGroup>
 
   <ItemGroup>
